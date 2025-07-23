@@ -23,24 +23,24 @@ services:
       ## Adjust below to change default port (9999)
       - STASH_PORT=9001
     volumes:
-      - /mystuff:/etc/hostfiles
+      - /mnt/stashpro_data/mystuff:/etc/hostfiles
 
       - /etc/localtimePro:/etc/localtime:ro
       ## Adjust below paths (the left part) to your liking.
       ## E.g. you can change ./config:/root/.stash to ./stash:/root/.stash
       
       ## Keep configs, scrapers, and plugins here.
-      - ./configPro:/root/.stash
+      - /mnt/stashpro_data/config:/root/.stash
       ## Point this at your collection.
-      - ./dataPro:/data
+      - /mnt/stashpro_data/data:/data
       ## This is where your stash's metadata lives
-      - ./metadataPro:/metadata
+      - /mnt/stashpro_data/metadata:/metadata
       ## Any other cache content.
-      - ./cachePro:/cache
+      - /mnt/stashpro_data/cache:/cache
       ## Where to store binary blob data (scene covers, images)
-      - ./blobsPro:/blobs
+      - /mnt/stashpro_data/blobs:/blobs
       ## Where to store generated content (screenshots,previews,transcodes,sprites)
-      - ./generatedPro:/generated
+      - /mnt/stashpro_data/generated:/generated
 
 # APPNICENAME=StashPersonal
 # APPDESCRIPTION=An organizer for your porn, written in Go
@@ -68,24 +68,24 @@ services:
       ## Adjust below to change default port (9999)
       - STASH_PORT=9002
     volumes:
-      - /mystuff:/etc/hostfiles
+      - /mnt/stashpersonal_data/mystuff:/etc/hostfiles
 
       - /etc/localtimePersonal:/etc/localtime:ro
       ## Adjust below paths (the left part) to your liking.
       ## E.g. you can change ./config:/root/.stash to ./stash:/root/.stash
       
       ## Keep configs, scrapers, and plugins here.
-      - ./configPersonal:/root/.stash
+      - /mnt/stashpersonal_data/config:/root/.stash
       ## Point this at your collection.
-      - ./dataPersonal:/data
+      - /mnt/stashpersonal_data/data:/data
       ## This is where your stash's metadata lives
-      - ./metadataPersonal:/metadata
+      - /mnt/stashpersonal_data/metadata:/metadata
       ## Any other cache content.
-      - ./cachePersonal:/cache
+      - /mnt/stashpersonal_data/cache:/cache
       ## Where to store binary blob data (scene covers, images)
-      - ./blobsPersonal:/blobs
+      - /mnt/stashpersonal_data/blobs:/blobs
       ## Where to store generated content (screenshots,previews,transcodes,sprites)
-      - ./generatedPersonal:/generated
+      - /mnt/stashpersonal_data/generated:/generated
 
 # APPNICENAME=StashAppProVR
 # APPDESCRIPTION=VR Viewer for your VR porn to work with StashApp
