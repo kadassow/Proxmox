@@ -14,7 +14,6 @@ services:
     - 8180:8180 # port for qbittorrent
     - 6881:6881 # torrent port for qbittorrent
     - 6881:6881/udp # torrent port for qbittorrent
-    - 8180:8180 # port for qbittorrent
     - 6789:6789 # nzbget
     # - 7878:7878 # radaar
     # - 8989:8989 #sonarr
@@ -48,8 +47,8 @@ services:
         - WEBUI_PORT=8180
         - TORRENTING_PORT=6881
       volumes:
-        - $CONFIGS/qbittorrent/config:/config
-        - $DATA/torrents:/downloads
+        - $CONFIGS_DIR/qbittorrent/config:/config
+        - $DATA_DIR/torrents:/downloads
       restart: unless-stopped # no | always | on-failure | unless-stopped
      
   nzbget:
