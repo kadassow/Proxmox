@@ -196,7 +196,9 @@ services:
     container_name: jellyseerr
     environment:
       - LOG_LEVEL=debug
-      - TZ=$TZ
+      - TZ=$TZ  
+      - PUID=$PUID
+      - PGID=$PGID
       - PORT=5055 #optional
     ports:
       - 5055:5055
