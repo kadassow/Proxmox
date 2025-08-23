@@ -15,6 +15,7 @@ services:
     - 6881:6881 # torrent port for qbittorrent
     - 6881:6881/udp # torrent port for qbittorrent
     - 6789:6789 # nzbget
+    - 6969:6969 #whisparr
     # - 7878:7878 # radaar
     # - 8989:8989 #sonarr
     # - 6767:6767 #bazaar
@@ -147,8 +148,6 @@ services:
     # depends_on:
     #   - gluetun_open 
     # network_mode: service:gluetun_open
-    ports:
-      - "6969:6969"
     environment:
       - PUID=$PUID
       - PGID=$PGID
@@ -196,9 +195,7 @@ services:
     container_name: jellyseerr
     environment:
       - LOG_LEVEL=debug
-      - TZ=$TZ  
-      - PUID=$PUID
-      - PGID=$PGID
+      - TZ=$TZ
       - PORT=5055 #optional
     ports:
       - 5055:5055
