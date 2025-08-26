@@ -1,0 +1,2 @@
+//192.168.69.150/data /data cifs credentials=/etc/.smbcredentials,uid=1000,gid=1000,file_mode=0775,dir_mode=0775,iocharset=utf8 0 0
+//192.168.69.150/docker /docker cifs credentials=/etc/.smbcredentials,uid=1000,gid=1000,file_mode=0775,dir_mode=0775,iocharset=utf8 0 0
