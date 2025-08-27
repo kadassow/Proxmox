@@ -15,11 +15,11 @@ services:
     - 6881:6881 # torrent port for qbittorrent
     - 6881:6881/udp # torrent port for qbittorrent
     - 6789:6789 # nzbget
-    - 6969:6969 #whisparr
+    # - 6969:6969 #whisparr
     # - 7878:7878 # radaar
     # - 8989:8989 #sonarr
     # - 6767:6767 #bazaar
-    #- 8280:8280 # port for sabnzb
+    # - 8280:8280 # port for sabnzb
     volumes:
     - $CONFIGS_DIR/gluetun/config:/gluetun    
     environment:
@@ -49,7 +49,7 @@ services:
         - TORRENTING_PORT=6881
       volumes:
         - $CONFIGS_DIR/qbittorrent/config:/config
-        - $DATA_DIR/torrents:/downloads
+        - $DATA_DIR/downloads/torrents:/downloads
       restart: unless-stopped # no | always | on-failure | unless-stopped
      
   nzbget:
@@ -66,7 +66,7 @@ services:
       - NZBGET_PASS=123abc #optional
     volumes:
       - $CONFIGS_DIR/nzbget/config:/config
-      - $DATA_DIR/usenet:/downloads #optional
+      - $DATA_DIR/downloads/usenet:/downloads #optional
     restart: unless-stopped
 
   sabnzb:
@@ -82,8 +82,8 @@ services:
       - TZ=$TZ
     volumes:
       - $CONFIGS_DIR/sabnzb/config:/config
-      - $DATA_DIR/usenet/:/downloads #optional
-      - $DATA_DIR/usenet/incomplete:/incomplete-downloads #optional
+      - $DATA_DIR/downloads/usenet/:/downloads #optional
+      - $DATA_DIR/downloads/usenet/intermediate:/incomplete-downloads #optional
     restart: unless-stopped
 
   radarr:
@@ -101,9 +101,7 @@ services:
       - TZ=$TZ
     volumes:
       - $CONFIGS_DIR/radarr/config:/config
-      - $DATA_DIR/media/movies:/movies #optional
-      - $DATA_DIR/torrents/movies:/downloads #optional    
-    
+      - $DATA_DIR:/data      
     restart: unless-stopped
 
   sonarr:
@@ -120,8 +118,7 @@ services:
       - TZ=$TZ
     volumes:
       - $CONFIGS_DIR/sonarr/config:/config
-      - $DATA_DIR/media/tv:/tv #optional
-      - $DATA_DIR/torrents/tv:/downloads #optional    
+      - $DATA_DIR:/data  
     restart: unless-stopped
 
   bazarr:
@@ -145,9 +142,11 @@ services:
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr
-    # depends_on:
+    #depends_on:
     #   - gluetun_open 
-    # network_mode: service:gluetun_open
+    #network_mode: service:gluetun_open
+    ports:
+      - 6969:6969
     environment:
       - PUID=$PUID
       - PGID=$PGID
@@ -155,7 +154,8 @@ services:
       - UMASK=002
     volumes:
       - $CONFIGS_DIR/whisparr/config:/config
-      - $DATA_DIR/media/privatestuff:/data
+      - $DATA_DIR:/data
+    restart: unless-stopped
 
   prowlarr:
     container_name: prowlarr
@@ -172,6 +172,7 @@ services:
       - UMASK=002
     volumes:
       - $CONFIGS_DIR/prowlarr/config:/config
+    restart: unless-stopped
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -201,10 +202,46 @@ services:
       - 5055:5055
     volumes:
       - $CONFIGS_DIR/jellyseerr/config:/app/config
-    healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
-      start_period: 20s
-      timeout: 3s
-      interval: 15s
-      retries: 3
+    #healthcheck:
+      #test: wget --no-verbose --tries=1 --spider http://192.168.68.86:5055/api/v1/status || exit 1
+      #start_period: 20s
+      #timeout: 3s
+      #interval: 15s
+      #retries: 3
+    restart: unless-stopped
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin2
+    environment:     
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      #- JELLYFIN_PublishedServerUrl=http://10.0.0.101 #optional
+    volumes:
+      - $CONFIGS_DIR/jellyfin2/config:/config
+      - $DATA_DIR/media:/data
+    devices:
+      - /dev/dri:/dev/dri #Use for Intel QuickSync
+    ports:
+      - 8096:8096
+      - 7359:7359/udp #Service Discovery
+      - 1900:1900/udp #Client Discovery
+    restart: unless-stopped
+
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+
+    environment:
+      - PLEX_CLAIM=claim-xb7jX1A2-MhzQz9htzZv
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ   
+      - VERSION=docker
+    ports:
+    - 32400:32400
+    volumes:
+    - $CONFIGS_DIR/plex/config:/config
+    - $DATA_DIR/media:/data
     restart: unless-stopped
