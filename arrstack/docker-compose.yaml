@@ -49,7 +49,8 @@ services:
         - TORRENTING_PORT=6881
       volumes:
         - $CONFIGS_DIR/qbittorrent/config:/config
-        - $DATA_DIR/downloads/torrents:/downloads
+        #- $DATA_DIR/downloads/torrents:/downloads
+        - $DATA_DIR/downloads/torrents:/$DATA_DIR/downloads/torrents
       restart: unless-stopped # no | always | on-failure | unless-stopped
      
   nzbget:
@@ -66,7 +67,7 @@ services:
       - NZBGET_PASS=123abc #optional
     volumes:
       - $CONFIGS_DIR/nzbget/config:/config
-      - $DATA_DIR/downloads/usenet:/downloads #optional
+      - $DATA_DIR/downloads/usenet:$DATA_DIR/downloads/usenet #optional
     restart: unless-stopped
 
   sabnzb:
@@ -82,7 +83,7 @@ services:
       - TZ=$TZ
     volumes:
       - $CONFIGS_DIR/sabnzb/config:/config
-      - $DATA_DIR/downloads/usenet/:/downloads #optional
+      - $DATA_DIR/downloads/usenet/:/$DATA_DIR/downloads/usenet #optional
       - $DATA_DIR/downloads/usenet/intermediate:/incomplete-downloads #optional
     restart: unless-stopped
 
