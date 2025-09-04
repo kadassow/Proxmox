@@ -8,3 +8,5 @@ mp0: /mnt/pve/bigdrive,mp=/mnt/pve/bigdrive
 
 https://trash-guides.info/
 
+resizing VM disks
+https://arcrow.com/how-resize-proxmox-vms-lvm-disk/
