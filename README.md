@@ -10,3 +10,7 @@ https://trash-guides.info/
 
 resizing VM disks
 https://arcrow.com/how-resize-proxmox-vms-lvm-disk/
+
+check container ip
+docker exec -it <containerName> /bin/bash -c "curl ipinfo.io/$(curl ifconfig.me)"
+curl ipinfo.io/$(curl ifconfig.me)
