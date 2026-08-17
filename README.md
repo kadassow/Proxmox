@@ -1,7 +1,7 @@
-#add bind mounts to containers through 
+# add bind mounts to containers through 
 https://www.youtube.com/watch?v=qa2Q7tZVol8&t=9s
 
-#add NAS mounts to unprivileged lxc
+# add NAS mounts to unprivileged lxc
 https://forum.proxmox.com/threads/tutorial-unprivileged-lxcs-mount-cifs-shares.101795/
 https://forum.proxmox.com/threads/tutorial-mounting-nfs-share-to-an-unprivileged-lxc.138506/
 ## LXC setup
@@ -10,7 +10,7 @@ groupadd -g 10000 lxc_shares
 sudo useradd keith
 usermod -aG lxc_shares keith
 
-##PVE Setup
+## PVE Setup
 on pve host
 mkdir /mnt/lxc_shares/pictures
 Code:
@@ -28,10 +28,10 @@ mp0: /mnt/pve/bigdrive,mp=/mnt/pve/bigdrive
 
 https://trash-guides.info/
 
-#resizing VM disks
+# resizing VM disks
 https://arcrow.com/how-resize-proxmox-vms-lvm-disk/
 
-check container ip
+# check container ip
 docker exec -it <containerName> /bin/bash -c "curl ipinfo.io/$(curl ifconfig.me)"
 curl ipinfo.io/$(curl ifconfig.me)
 
