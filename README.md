@@ -32,3 +32,9 @@ https://arcrow.com/how-resize-proxmox-vms-lvm-disk/
 check container ip
 docker exec -it <containerName> /bin/bash -c "curl ipinfo.io/$(curl ifconfig.me)"
 curl ipinfo.io/$(curl ifconfig.me)
+
+
+
+# portainer setup key
+within lxc console -
+docker logs portainer
