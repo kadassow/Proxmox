@@ -8,10 +8,14 @@ https://forum.proxmox.com/threads/tutorial-mounting-nfs-share-to-an-unprivileged
 on lxc - 
 groupadd -g 10000 lxc_shares
 sudo useradd keith
-usermod -aG lxc_shares keith
+usemod -aG lxc_shares keith
+
+### change folder own
+chown :lxc_shares /mnt/media
+
 
 ## PVE Setup
-on pve host
+on pve host 1 time setup per share
 mkdir /mnt/lxc_shares/pictures
 Code:
 { echo '' ; echo '# Mount CIFS share on demand with rwx permissions for use in LXCs (manually added)' ; echo '//192.168.69.150/data/media/pictures /mnt/lxc_shares/pictures cifs _netdev,x-systemd.automount,noatime,uid=100000,gid=110000,dir_mode=0770,file_mode=0770,user=keith,pass=123abc 0 0' ; } | tee -a /etc/fstab
